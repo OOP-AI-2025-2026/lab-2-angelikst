@@ -3,44 +3,80 @@ package ua.opnu;
 
 public class TimeSpan {
 
-    // TODO: add class fields
 
+    public int hours;
+    public int minutes;
     TimeSpan(int hours, int minutes) {
-        // TODO: write constructor body
+
+        if(hours <0 || minutes <0 || minutes > 59) {
+            this.hours = 0;
+            this.minutes = 0;
+        } else {
+            this.hours = hours;
+            this.minutes = minutes;
+        }
+
     }
 
     int getHours() {
-        return 0;
+        return hours;
     }
 
     int getMinutes() {
-        // TODO: write method body
-        return 0;
+
+        return minutes;
     }
 
     void add(int hours, int minutes) {
-        // TODO: write method body
+        if (hours < 0 || minutes < 0 || minutes > 59) {
+            return;
+        }
+
+        this.minutes += minutes;
+        this.hours += hours;
+
+        if (this.minutes >= 60) {
+
+            this.hours += this.minutes / 60;
+            this.minutes = this.minutes % 60;
+        }
+
     }
 
     void addTimeSpan(TimeSpan timespan) {
-        // TODO: write method body
+
+        add(timespan.getHours(),timespan.getMinutes());
     }
 
     double getTotalHours() {
-        // TODO: write method body
-        return 0;
+        return hours+minutes/60.0;
+
     }
 
     int getTotalMinutes() {
-        // TODO: write method body
-        return 0;
+        return minutes+hours*60;
+
     }
 
     void subtract(TimeSpan span) {
-        // TODO: write method body
+        int totalMinutes = hours * 60 + minutes;
+        int allMinutes = span.getHours() * 60 + span.getMinutes();
+        int result = totalMinutes - allMinutes;
+        if (result < 0){
+            return;
+        }
+        hours = result / 60;
+        minutes = result % 60;
     }
 
     void scale(int factor) {
-        // TODO: write method body
+        if (factor > 0) {
+            int totalMinutes = (getHours() * 60 + getMinutes()) * factor;
+            hours = totalMinutes / 60;
+            minutes = totalMinutes % 60;
+        } else {
+
+            return;
+        }
     }
 }
